@@ -1,0 +1,2 @@
+C:\Users\249912\Desktop\Sprint 6\File Reader Demo\File Reader Demo\File_Reader_DemoContent\obj\x86\Debug\File_Reader_DemoContent.contentproj.AssemblyReference.cache
+C:\Users\249912\Desktop\Sprint 6\File Reader Demo\File Reader Demo\File_Reader_DemoContent\obj\x86\Debug\File_Reader_DemoContent.contentproj.CoreCompileInputs.cache
