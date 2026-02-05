@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace What_did_you_say
+namespace Slide_Show
 {
     /// <summary>
     /// This is the main type for your game
@@ -20,11 +20,18 @@ namespace What_did_you_say
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        List<string> lines;
+
+
         SpriteFont font;
 
+        List<string> lines;
+        int inputX,inputY,inputZ,inputV;
+        List<Rectangle> totalRectangle = new List<Rectangle> {};
+        Texture2D spriteImage;
+        int currentImage = 0;
+        double time = 0;
 
-
+        Rectangle currentRectangle;
 
         public Game1()
         {
@@ -55,8 +62,11 @@ namespace What_did_you_say
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = this.Content.Load<SpriteFont>("SpriteFont1");
 
+            spriteImage = this.Content.Load<Texture2D>("sprite sheet");
 
-            ReadFileAsStrings(@"Content/5.2 Data File.txt");
+            ReadFileAsStrings(@"Content/anything.txt");
+
+            ReadFileAsIntegers(@"Content/numbers.txt");
             // TODO: use this.Content to load your game content here
         }
 
@@ -69,19 +79,42 @@ namespace What_did_you_say
                 {
                     while (!reader.EndOfStream)
                     {
+                        string line = reader.ReadLine();
+                        lines.Add(line);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
+        }
 
-                        
-                        
-                        
-                        for(int i = 0; i < 6; i+=2)
+        
+
+        private void ReadFileAsIntegers(string path)
+        {
+            try
+            {
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        for (int i = 0; i < 6; i++)
                         {
                             string line = reader.ReadLine();
-                            
-                            string line2 = reader.ReadLine();
-                            lines.Add(line + " " + line2);
+                            string[] parts = line.Split(' ');
+                            for (int j = 0; j < parts.Length; j++)
+                            {
+                                inputX = Convert.ToInt32(parts[j]);
+                                inputY = Convert.ToInt32(parts[j+1]);
+                                inputZ = Convert.ToInt32(parts[j+2]);
+                                inputV = Convert.ToInt32(parts[j+3]);
+                                totalRectangle[i] = new Rectangle(inputX, inputY, inputZ, inputV);
+                            }
                         }
-                        
-                        
+
                     }
                 }
             }
@@ -112,6 +145,18 @@ namespace What_did_you_say
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+            time += gameTime.ElapsedGameTime.TotalSeconds;
+            if (time % 2 == 0)
+            {
+                currentImage+=1;
+                if (currentImage > 6)
+                {
+                    currentImage = 1;
+                }
+            }
+
+
+            currentRectangle = totalRectangle[0];
 
             // TODO: Add your update logic here
 
@@ -129,19 +174,35 @@ namespace What_did_you_say
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            DrawText();
+            //DrawText();
+            //DrawNumbers();
+
+            spriteBatch.Draw(spriteImage,new Rectangle (200,200,100,100),currentRectangle,Color.White);
+
+
 
             spriteBatch.End();
             base.Draw(gameTime);
         }
-        private void DrawText()
-        {
-            Vector2 position = new Vector2(50, 10);
-            foreach (string s in lines)
-            {
-                spriteBatch.DrawString(font, s, position, Color.Black);
-                position.Y += 30;
-            }
-        }
+
+
+        //private void DrawText()
+        //{
+        //    Vector2 position = new Vector2(50, 10);
+        //    foreach (string s in lines)
+        //    {
+        //        spriteBatch.DrawString(font, s, position, Color.Black);
+        //        position.Y += 30;
+        //    }
+        //}
+
+        //private void DrawNumbers()
+        //{
+        //    Vector2 position = new Vector2(50, 10);
+        //    int sum = inputX + inputY;
+        //    string answer = "I read " + inputX + " and " + inputY + ". The sum is " + sum;
+
+        //    spriteBatch.DrawString(font, answer, position, Color.Black);
+        //}
     }
 }
