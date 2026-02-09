@@ -7,33 +7,34 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
-namespace Slide_Show
+namespace Start_Me_Up
 {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
+    /// 
+
+    enum GameState
+    {
+        Start,
+        Play,
+        Quit
+    }
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        GameState gameState = GameState.Start;
 
+        Texture2D[] textures = new Texture2D[3];
 
-        SpriteFont font;
-        string[] parts;
-        List<string> lines;
-        int inputX,inputY,inputZ,inputV;
+        KeyboardState oldKb = Keyboard.GetState();
 
-        List<Rectangle> totalRectangle = new List<Rectangle> {};
-
-        Texture2D spriteImage;
         int current = 0;
-        double time = 0;
-        String totalCount;
-        Rectangle currentRectangle;
+
 
         public Game1()
         {
@@ -50,7 +51,7 @@ namespace Slide_Show
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            lines = new List<string>();
+
             base.Initialize();
         }
 
@@ -62,51 +63,9 @@ namespace Slide_Show
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = this.Content.Load<SpriteFont>("SpriteFont1");
 
-            spriteImage = this.Content.Load<Texture2D>("sprite sheet");
-
-            
-
-            ReadFileAsIntegers(@"Content/rectangle data.txt");
             // TODO: use this.Content to load your game content here
         }
-       
-
-        private void ReadFileAsIntegers(string path)
-        {
-            try
-            {
-                using (StreamReader reader = new StreamReader(path))
-                {
-                    while (!reader.EndOfStream)
-                    {
-                        for (int i = 0; i < 6; i++)
-                        {
-                            string line = reader.ReadLine();
-                            totalCount = totalCount + line + " ";
-                        }
-                        parts = totalCount.Split(' ');
-                        for (int j = 0; j < parts.Length; j++)
-                        {
-
-                            inputX = Convert.ToInt32(parts[0 + 4 * j]);
-                            inputY = Convert.ToInt32(parts[1 + 4 * j]);
-                            inputZ = Convert.ToInt32(parts[2 + 4 * j]);
-                            inputV = Convert.ToInt32(parts[3 + 4 * j]);
-
-                            totalRectangle.Add(new Rectangle(inputX, inputY, inputZ, inputV));
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The file could not be read:");
-                Console.WriteLine(e.Message);
-            }
-        }
-
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -125,21 +84,33 @@ namespace Slide_Show
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            KeyboardState kb = Keyboard.GetState();
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape) && !oldKb.IsKeyDown(Keys.Escape)) 
                 this.Exit();
-            time += gameTime.ElapsedGameTime.TotalSeconds;
 
-            
-            if ((int)time % 4 > 1)
+            if(kb.IsKeyDown(Keys.Enter) && !oldKb.IsKeyDown(Keys.Enter))
             {
-                time = 0;
-                current += 1;
-                if (current > 5)
-                {
-                    current = 0;
-                }
+                gameState++;
             }
-            currentRectangle = totalRectangle[current];
+
+
+            switch (gameState) {
+                case GameState.Start:
+                    textures[0] = this.Content.Load<Texture2D>("start");
+                    break;
+                case GameState.Play:
+                    textures[1] = this.Content.Load<Texture2D>("play");
+                    break;
+
+
+                case GameState.Quit:
+                    textures[2] = this.Content.Load<Texture2D>("quit");
+                    break;
+
+
+            }
+
+
 
             // TODO: Add your update logic here
 
@@ -153,22 +124,15 @@ namespace Slide_Show
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
             spriteBatch.Begin();
 
+            spriteBatch.Draw(textures[current], new Rectangle(0, 0, 255, 255), Color.White);
 
-            spriteBatch.Draw(spriteImage, new Rectangle (200,200,100,100), currentRectangle,Color.White);
-
-            spriteBatch.DrawString(font, totalRectangle[0] + "", new Vector2(50, 50), Color.White);
-            spriteBatch.DrawString(font, time + "", new Vector2(600, 50), Color.White);
-            spriteBatch.DrawString(font, current + "", new Vector2(600, 250), Color.White);
 
             spriteBatch.End();
+            // TODO: Add your drawing code here
+
             base.Draw(gameTime);
         }
-
-
-        
     }
 }

@@ -7,7 +7,7 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\249912\Desktop\Sprint 6\File Reader Demo\File Reader Demo\File_Reader_Demo\bin\x86\Debug\Content\SpriteFont1.xnb</Output>
+      <Output>C:\Users\249912\source\repos\B4-VGP1-Sprint-6\File Reader Demo\File Reader Demo\File_Reader_Demo\bin\x86\Debug\Content\SpriteFont1.xnb</Output>
       <Time>2026-02-05T15:12:24.4304389-06:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
@@ -17,10 +17,10 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\249912\Desktop\Sprint 6\File Reader Demo\File Reader Demo\File_Reader_DemoContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\249912\Desktop\Sprint 6\File Reader Demo\File Reader Demo\File_Reader_Demo\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\249912\Desktop\Sprint 6\File Reader Demo\File Reader Demo\File_Reader_Demo\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\249912\Desktop\Sprint 6\File Reader Demo\File Reader Demo\File_Reader_Demo\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\249912\source\repos\B4-VGP1-Sprint-6\File Reader Demo\File Reader Demo\File_Reader_DemoContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\249912\source\repos\B4-VGP1-Sprint-6\File Reader Demo\File Reader Demo\File_Reader_Demo\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\249912\source\repos\B4-VGP1-Sprint-6\File Reader Demo\File Reader Demo\File_Reader_Demo\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\249912\source\repos\B4-VGP1-Sprint-6\File Reader Demo\File Reader Demo\File_Reader_Demo\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
