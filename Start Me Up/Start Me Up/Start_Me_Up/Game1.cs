@@ -88,10 +88,18 @@ namespace Start_Me_Up
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape) && !oldKb.IsKeyDown(Keys.Escape)) 
                 this.Exit();
 
-            if(kb.IsKeyDown(Keys.Enter) && !oldKb.IsKeyDown(Keys.Enter))
+
+            if(gameState == GameState.Play)
             {
-                gameState++;
+                if (kb.IsKeyDown(Keys.Enter) && !oldKb.IsKeyDown(Keys.Enter))
+                {
+
+                    gameState = 
+                    textures[0] = this.Content.Load<Texture2D>("start");
+                }
             }
+
+            
 
 
             switch (gameState) {
