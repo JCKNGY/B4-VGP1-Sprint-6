@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.35130.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space_Invaders_Part_2", "Space Invaders Part 2\Space_Invaders_Part_2\Space_Invaders_Part_2.csproj", "{3D7A0D91-FB47-408D-A051-7DC62EA71FFB}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Space_Invaders_Part_2Content", "Space Invaders Part 2\Space_Invaders_Part_2Content\Space_Invaders_Part_2Content.contentproj", "{AEACCEAF-98D4-4813-BB3F-19A2DC473549}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D7A0D91-FB47-408D-A051-7DC62EA71FFB}.Debug|x86.ActiveCfg = Debug|x86
+		{3D7A0D91-FB47-408D-A051-7DC62EA71FFB}.Debug|x86.Build.0 = Debug|x86
+		{3D7A0D91-FB47-408D-A051-7DC62EA71FFB}.Release|x86.ActiveCfg = Release|x86
+		{3D7A0D91-FB47-408D-A051-7DC62EA71FFB}.Release|x86.Build.0 = Release|x86
+		{AEACCEAF-98D4-4813-BB3F-19A2DC473549}.Debug|x86.ActiveCfg = Debug|x86
+		{AEACCEAF-98D4-4813-BB3F-19A2DC473549}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A0AE69E-9BB9-4B73-BFA1-2A8854861CBC}
+	EndGlobalSection
+EndGlobal

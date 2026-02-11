@@ -1,13 +1,6 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Start_Me_Up
 {
@@ -63,7 +56,9 @@ namespace Start_Me_Up
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            textures[0] = this.Content.Load<Texture2D>("start");
+            textures[1] = this.Content.Load<Texture2D>("play");
+            textures[2] = this.Content.Load<Texture2D>("quit");
             // TODO: use this.Content to load your game content here
         }
 
@@ -85,41 +80,56 @@ namespace Start_Me_Up
         {
             // Allows the game to exit
             KeyboardState kb = Keyboard.GetState();
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape) && !oldKb.IsKeyDown(Keys.Escape)) 
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape) && !oldKb.IsKeyDown(Keys.Escape))
                 this.Exit();
 
 
-            if(gameState == GameState.Play)
+            if (gameState == GameState.Start && kb.IsKeyDown(Keys.Enter) && !oldKb.IsKeyDown(Keys.Enter))
             {
-                if (kb.IsKeyDown(Keys.Enter) && !oldKb.IsKeyDown(Keys.Enter))
+                
+            }
+
+            if (gameState == GameState.Play && kb.IsKeyDown(Keys.Enter) && !oldKb.IsKeyDown(Keys.Enter))
+            {
+                
+
+            }
+
+
+            if (gameState == GameState.Quit && kb.IsKeyDown(Keys.Enter) && !oldKb.IsKeyDown(Keys.Enter))
+            {
+
+
+                
+
+            }
+
+
+            if (kb.IsKeyDown(Keys.Enter) && !oldKb.IsKeyDown(Keys.Enter))
+            {
+                switch (gameState)
                 {
+                    case GameState.Start:
+                        current = 0;
+                        gameState = GameState.Play;
+                        break;
 
-                    gameState = 
-                    textures[0] = this.Content.Load<Texture2D>("start");
+
+                    case GameState.Play:
+                        current = 1;
+                        gameState = GameState.Quit;
+                        break;
+
+                    case GameState.Quit:
+                        current = 2;
+                        gameState = GameState.Start;
+                        break;
+                
                 }
-            }
-
-            
-
-
-            switch (gameState) {
-                case GameState.Start:
-                    textures[0] = this.Content.Load<Texture2D>("start");
-                    break;
-                case GameState.Play:
-                    textures[1] = this.Content.Load<Texture2D>("play");
-                    break;
-
-
-                case GameState.Quit:
-                    textures[2] = this.Content.Load<Texture2D>("quit");
-                    break;
-
 
             }
 
-
-
+            oldKb = kb;
             // TODO: Add your update logic here
 
             base.Update(gameTime);
