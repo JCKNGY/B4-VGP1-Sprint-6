@@ -20,10 +20,22 @@ namespace Space_Invaders_Part_2
         SpriteBatch spriteBatch;
         Alien[,] aliens = new Alien[10, 10];
 
+        SoundEffect backgroundSound;
+
+        double time;
+        double oldTime;
+
+        Boolean start = true; 
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.Window.Title = "Invaders";
+            graphics.PreferredBackBufferWidth = 1000;
+            graphics.PreferredBackBufferHeight = 1000;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -35,44 +47,48 @@ namespace Space_Invaders_Part_2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            for(int i = 0; i < 10; i++)
+
+            backgroundSound = Content.Load<SoundEffect>("SI Homeworld");
+
+
+
+
+
+            for (int i = 0; i < 10; i++)
             {
-                for(int j = 0; j < 10; j++)
+                for (int j = 0; j < 10; j++)
                 {
-                    aliens[i, j].alienRect = new Rectangle(50 * i, 50 * j, 30, 40);
-                    switch (i){
+                    switch (i)
+                    {
                         case 0:
-                            aliens[i, j].alienTex = this.Content.Load<Texture2D>("Space Invaders 1st");
+                            aliens[i, j] = new Alien(new Rectangle(50 * i, 50 * j, 30, 40), this.Content.Load<Texture2D>("Space Invaders 1st"));
                             break;
                         case 1:
-                            aliens[i, j].alienTex = this.Content.Load<Texture2D>("Space Invaders 2nd");
+                            aliens[i, j] = new Alien(new Rectangle(50 * i, 50 * j, 30, 40), this.Content.Load<Texture2D>("Space Invaders 2nd"));
                             break;
                         case 2:
-                            aliens[i, j].alienTex = this.Content.Load<Texture2D>("Space Invaders 3rd");
+                            aliens[i, j] = new Alien(new Rectangle(50 * i, 50 * j, 30, 40), this.Content.Load<Texture2D>("Space Invaders 3rd"));
                             break;
                         case 3:
-                            aliens[i, j].alienTex = this.Content.Load<Texture2D>("Space Invaders 4th");
+                            aliens[i, j] = new Alien(new Rectangle(50 * i, 50 * j, 30, 40), this.Content.Load<Texture2D>("Space Invaders 4th"));
                             break;
                         case 4:
-                            aliens[i, j].alienTex = this.Content.Load<Texture2D>("Space Invaders 5th");
+                            aliens[i, j] = new Alien(new Rectangle(50 * i, 50 * j, 30, 40), this.Content.Load<Texture2D>("Space Invaders 5th"));
                             break;
                         case 5:
-                            aliens[i, j].alienTex = this.Content.Load<Texture2D>("Space Invaders 6th");
+                            aliens[i, j] = new Alien(new Rectangle(50 * i, 50 * j, 30, 40), this.Content.Load<Texture2D>("Space Invaders 6th"));
                             break;
                         case 6:
-                            aliens[i, j].alienTex = this.Content.Load<Texture2D>("Space Invaders 7th");
+                            aliens[i, j] = new Alien(new Rectangle(50 * i, 50 * j, 30, 40), this.Content.Load<Texture2D>("Space Invaders 7th"));
                             break;
                         case 7:
-                            aliens[i, j].alienTex = this.Content.Load<Texture2D>("Space Invaders 8th");
+                            aliens[i, j] = new Alien(new Rectangle(50 * i, 50 * j, 30, 40), this.Content.Load<Texture2D>("Space Invaders 8th"));
                             break;
-                        
                     }
-                    
+
                 }
-
-
+                base.Initialize();
             }
-            base.Initialize();
         }
 
         /// <summary>
@@ -106,6 +122,20 @@ namespace Space_Invaders_Part_2
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+            
+            time += gameTime.ElapsedGameTime.TotalSeconds;
+            if (start)
+            {
+                backgroundSound.Play();
+                start = false;
+            }
+            if(time > 100)
+            {
+                backgroundSound.Play();
+                oldTime = time; 
+            }
+            
+
 
             // TODO: Add your update logic here
 
@@ -118,8 +148,20 @@ namespace Space_Invaders_Part_2
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin();
 
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    //spriteBatch.Draw(aliens[i, j].alienTex, aliens[i, j].alienRect, Color.White);
+                }
+            }
+
+
+
+                    spriteBatch.End(); 
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

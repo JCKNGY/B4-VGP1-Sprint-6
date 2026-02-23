@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.35130.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breakout", "Breakout\Breakout\Breakout.csproj", "{F40AAB61-0F41-4756-98DB-75937ACD83CD}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "BreakoutContent", "Breakout\BreakoutContent\BreakoutContent.contentproj", "{BAB15EBE-8BE0-42AF-B7F3-1AAF165A31ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F40AAB61-0F41-4756-98DB-75937ACD83CD}.Debug|x86.ActiveCfg = Debug|x86
+		{F40AAB61-0F41-4756-98DB-75937ACD83CD}.Debug|x86.Build.0 = Debug|x86
+		{F40AAB61-0F41-4756-98DB-75937ACD83CD}.Release|x86.ActiveCfg = Release|x86
+		{F40AAB61-0F41-4756-98DB-75937ACD83CD}.Release|x86.Build.0 = Release|x86
+		{BAB15EBE-8BE0-42AF-B7F3-1AAF165A31ED}.Debug|x86.ActiveCfg = Debug|x86
+		{BAB15EBE-8BE0-42AF-B7F3-1AAF165A31ED}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8A442777-A4D6-465B-8318-8C72E1474D59}
+	EndGlobalSection
+EndGlobal
