@@ -81,21 +81,18 @@ namespace Slide_Show
                 {
                     while (!reader.EndOfStream)
                     {
-                        for (int i = 0; i < 6; i++)
+                        string[] allLines = File.ReadAllLines(path);
+                        foreach (string line in allLines)
                         {
-                            string line = reader.ReadLine();
-                            totalCount = totalCount + line + " ";
-                        }
-                        parts = totalCount.Split(' ');
-                        for (int j = 0; j < parts.Length; j++)
-                        {
-
-                            inputX = Convert.ToInt32(parts[0 + 4 * j]);
-                            inputY = Convert.ToInt32(parts[1 + 4 * j]);
-                            inputZ = Convert.ToInt32(parts[2 + 4 * j]);
-                            inputV = Convert.ToInt32(parts[3 + 4 * j]);
-
-                            totalRectangle.Add(new Rectangle(inputX, inputY, inputZ, inputV));
+                            string[] parts = line.Split(' '); 
+                            if (parts.Length == 4)
+                            {
+                                int x = int.Parse(parts[0]);
+                                int y = int.Parse(parts[1]);
+                                int w = int.Parse(parts[2]);
+                                int h = int.Parse(parts[3]);
+                                totalRectangle.Add(new Rectangle(x, y, w, h));
+                            }
                         }
                     }
                 }
@@ -129,12 +126,13 @@ namespace Slide_Show
                 this.Exit();
             time += gameTime.ElapsedGameTime.TotalSeconds;
 
-            
-            if ((int)time % 4 > 1)
+
+            if (time >= 2.0)
             {
                 time = 0;
-                current += 1;
-                if (current > 5)
+                current++;
+                
+                if (current >= totalRectangle.Count)
                 {
                     current = 0;
                 }

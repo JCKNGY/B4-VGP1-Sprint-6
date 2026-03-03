@@ -100,34 +100,27 @@ namespace Start_Me_Up
             {
 
 
-                
+
 
             }
 
 
             if (kb.IsKeyDown(Keys.Enter) && !oldKb.IsKeyDown(Keys.Enter))
             {
-                switch (gameState)
+                if (gameState == GameState.Start)
                 {
-                    case GameState.Start:
-                        current = 0;
-                        gameState = GameState.Play;
-                        break;
-
-
-                    case GameState.Play:
-                        current = 1;
-                        gameState = GameState.Quit;
-                        break;
-
-                    case GameState.Quit:
-                        current = 2;
-                        gameState = GameState.Start;
-                        break;
-                
+                    gameState = GameState.Play;
                 }
-
+                else if (gameState == GameState.Play)
+                {
+                    gameState = GameState.Quit;
+                }
+                else if (gameState == GameState.Quit)
+                {
+                    gameState = GameState.Start;
+                }
             }
+
 
             oldKb = kb;
             // TODO: Add your update logic here
@@ -144,8 +137,7 @@ namespace Start_Me_Up
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
-            spriteBatch.Draw(textures[current], new Rectangle(0, 0, 255, 255), Color.White);
-
+            spriteBatch.Draw(textures[(int)gameState], new Rectangle(0, 0, 800, 600), Color.White);
 
             spriteBatch.End();
             // TODO: Add your drawing code here

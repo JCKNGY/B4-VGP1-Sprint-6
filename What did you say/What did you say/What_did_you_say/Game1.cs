@@ -63,33 +63,7 @@ namespace What_did_you_say
 
         private void ReadFileAsStrings(string path)
         {
-            try
-            {
-                using (StreamReader reader = new StreamReader(path))
-                {
-                    while (!reader.EndOfStream)
-                    {
-
-                        
-                        
-                        
-                        for(int i = 0; i < 6; i+=2)
-                        {
-                            string line = reader.ReadLine();
-                            
-                            string line2 = reader.ReadLine();
-                            lines.Add(line + " " + line2);
-                        }
-                        
-                        
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The file could not be read:");
-                Console.WriteLine(e.Message);
-            }
+            lines = File.ReadAllLines(path).ToList();
         }
 
 
@@ -137,9 +111,14 @@ namespace What_did_you_say
         private void DrawText()
         {
             Vector2 position = new Vector2(50, 10);
-            foreach (string s in lines)
+
+
+            for (int i = 0; i < lines.Count - 1; i += 2)
             {
-                spriteBatch.DrawString(font, s, position, Color.Black);
+                string combinedString = lines[i] + " " + lines[i + 1];
+
+                spriteBatch.DrawString(font, combinedString, position, Color.Black);
+
                 position.Y += 30;
             }
         }
