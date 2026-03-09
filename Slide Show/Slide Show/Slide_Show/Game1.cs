@@ -20,8 +20,6 @@ namespace Slide_Show
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-
-
         SpriteFont font;
         string[] parts;
         List<string> lines;
@@ -81,18 +79,21 @@ namespace Slide_Show
                 {
                     while (!reader.EndOfStream)
                     {
-                        string[] allLines = File.ReadAllLines(path);
-                        foreach (string line in allLines)
+                        for (int i = 0; i < 6; i++)
                         {
-                            string[] parts = line.Split(' '); 
-                            if (parts.Length == 4)
-                            {
-                                int x = int.Parse(parts[0]);
-                                int y = int.Parse(parts[1]);
-                                int w = int.Parse(parts[2]);
-                                int h = int.Parse(parts[3]);
-                                totalRectangle.Add(new Rectangle(x, y, w, h));
-                            }
+                            string line = reader.ReadLine();
+                            totalCount = totalCount + line + " ";
+                        }
+                        parts = totalCount.Split(' ');
+                        for (int j = 0; j < parts.Length; j++)
+                        {
+
+                            inputX = Convert.ToInt32(parts[0 + 4 * j]);
+                            inputY = Convert.ToInt32(parts[1 + 4 * j]);
+                            inputZ = Convert.ToInt32(parts[2 + 4 * j]);
+                            inputV = Convert.ToInt32(parts[3 + 4 * j]);
+
+                            totalRectangle.Add(new Rectangle(inputX, inputY, inputZ, inputV));
                         }
                     }
                 }
@@ -126,13 +127,12 @@ namespace Slide_Show
                 this.Exit();
             time += gameTime.ElapsedGameTime.TotalSeconds;
 
-
-            if (time >= 2.0)
+            
+            if ((int)time % 4 > 1)
             {
                 time = 0;
-                current++;
-                
-                if (current >= totalRectangle.Count)
+                current += 1;
+                if (current > 5)
                 {
                     current = 0;
                 }
@@ -158,7 +158,6 @@ namespace Slide_Show
 
             spriteBatch.Draw(spriteImage, new Rectangle (200,200,100,100), currentRectangle,Color.White);
 
-            spriteBatch.DrawString(font, totalRectangle[0] + "", new Vector2(50, 50), Color.White);
             spriteBatch.DrawString(font, time + "", new Vector2(600, 50), Color.White);
             spriteBatch.DrawString(font, current + "", new Vector2(600, 250), Color.White);
 

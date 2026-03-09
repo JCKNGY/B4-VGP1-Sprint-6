@@ -18,7 +18,12 @@ namespace Breakout
     public class Game1 : Microsoft.Xna.Framework.Game
     {
 
-        enum GameState { level1, level2, level3 }
+        enum GameState
+        { 
+            level1,
+            level2, 
+            level3 
+        }
         GameState currentGameState;
 
         Brick[,] brickGrid;
@@ -28,8 +33,8 @@ namespace Breakout
         Vector2 ballPosition;
         Vector2 ballVelocity;
 
-        int ROWS = 9;
-        int COLS = 25;
+        int rows = 9;
+        int cols = 25;
         bool levelIsActive = false;
 
         KeyboardState oldkb; 
@@ -96,7 +101,7 @@ namespace Breakout
 
         public void LoadLevel(string fileName)
         {
-            brickGrid = new Brick[ROWS, COLS];
+            brickGrid = new Brick[rows, cols];
 
             levelIsActive = false;
 
@@ -106,23 +111,23 @@ namespace Breakout
             {
                 string[] lines = File.ReadAllLines(fileName);
 
-                int bWidth = 800 / COLS;
+                int bWidth = 800 / cols;
                 int bHeight = 25;
 
-                for (int r = 0; r < lines.Length && r < ROWS; r++)
+                for (int r = 0; r < lines.Length && r < rows; r++)
                 {
-                    for (int c = 0; c < lines[r].Length && c < COLS; c++)
+                    for (int c = 0; c < lines[r].Length && c < cols; c++)
                     {
                         char desc = lines[r][c];
 
                         if (desc != '.')
                         {
                             Color bColor = GetColor(desc);
-
+                            int hp = getHp(bColor);
                             Rectangle rect = new Rectangle(c * bWidth, (r * bHeight) + 60, bWidth - 1, bHeight - 1);
 
-                            brickGrid[r, c] = new Brick(whiteBox, bColor, rect, 1);
-
+                            brickGrid[r, c] = new Brick(whiteBox, bColor, rect, hp);
+                            
                             levelIsActive = true;
                         }
                     }
@@ -130,7 +135,7 @@ namespace Breakout
             }
         }
 
-        private Color GetColor(char c)
+        public Color GetColor(char c)
         {
             if (c == 'b')
             {
@@ -158,6 +163,35 @@ namespace Breakout
             }
 
             return Color.White;
+        }
+        public int getHp(Color c)
+        {
+            if (c == Color.Blue)
+            {
+                return 1;
+            }
+
+            if (c == Color.Green)
+            {
+                return 2;
+            }
+
+            if (c == Color.Orange)
+            {
+                return 3;
+            }
+
+            if (c == Color.Red)
+            {
+                return 2;
+            }
+
+            if (c == Color.Yellow)
+            {
+                return 1;
+            }
+
+            return 1;
         }
 
 
@@ -219,9 +253,9 @@ namespace Breakout
 
             bool anyBricksLeft = false;
 
-            for (int r = 0; r < ROWS; r++)
+            for (int r = 0; r < rows; r++)
             {
-                for (int c = 0; c < COLS; c++)
+                for (int c = 0; c < cols; c++)
                 {
                     if (brickGrid[r, c] != null)
                     {
@@ -229,9 +263,45 @@ namespace Breakout
 
                         if (ball.Intersects(brickGrid[r, c].rectangle))
                         {
-                            ballVelocity.Y *= -1;
+                            Rectangle brickRect = brickGrid[r, c].rectangle;
+
+
+                            if (ball.Center.X < brickRect.Left || ball.Center.X > brickRect.Right)
+                            {
+                                ballVelocity.X *= -1;
+                            }
+                            else
+                            {
+                                ballVelocity.Y *= -1;
+                            }
+                                
+
+                            brickGrid[r, c].hitPoints--;
+                            if (brickGrid[r, c].hitPoints <= 0)
+                            {
+                                brickGrid[r, c] = null;
+                            }
+                            else
+                            {
+                                
+                                brickGrid[r, c].color *= 0.8f;
+                            }
+
+                            return; 
+                        }
+                    }
+                }
+            }
+
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    if (brickGrid[r, c] != null)
+                    {
+                        if(brickGrid[r,c].hitPoints == 0)
+                        {
                             brickGrid[r, c] = null;
-                            return;
                         }
                     }
                 }
@@ -286,9 +356,9 @@ namespace Breakout
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
-            for (int r = 0; r < ROWS; r++)
+            for (int r = 0; r < rows; r++)
             {
-                for (int c = 0; c < COLS; c++)
+                for (int c = 0; c < cols; c++)
                 {
                     if (brickGrid[r, c] != null)
                     {

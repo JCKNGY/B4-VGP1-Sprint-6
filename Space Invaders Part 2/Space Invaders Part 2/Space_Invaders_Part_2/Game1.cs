@@ -30,10 +30,12 @@ namespace Space_Invaders_Part_2
 
         int screenWidth = 1000;
         int screenHeight = 1000;
-        int totalGridHeight = 8 * 30;
 
         SoundEffect backgroundSound;
         bool start = true;
+
+        KeyboardState oldKb; 
+
 
         public Game1()
         {
@@ -82,7 +84,7 @@ namespace Space_Invaders_Part_2
         }
 
 
-        private string GetRowTextureName(int row)
+        public string GetRowTextureName(int row)
         {
             if (row == 0)
             {
@@ -119,7 +121,8 @@ namespace Space_Invaders_Part_2
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            KeyboardState kb = Keyboard.GetState();
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape) && !oldKb.IsKeyDown(Keys.Escape))
                 this.Exit();
 
             if (start)
@@ -163,7 +166,7 @@ namespace Space_Invaders_Part_2
 
 
             // TODO: Add your update logic here
-
+            oldKb = kb;
             base.Update(gameTime);
         }
 
